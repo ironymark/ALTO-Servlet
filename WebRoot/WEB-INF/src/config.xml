@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Hi</comment>
+<entry key="fedoraserver">http://loghati.amuser-qstpb.com/fedora/objects</entry>
+<entry key="fedoraDC">/datastreams/DC/content</entry>
+<entry key="fedoraRELS">/datastreams/RELS-EXT/content</entry>
+<entry key="TTSWAVFOLDER">C:/apache-tomcat-5.5.29/webapps/alto2/test</entry>
+</properties>
