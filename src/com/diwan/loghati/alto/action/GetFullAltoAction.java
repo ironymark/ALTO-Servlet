@@ -11,6 +11,8 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
+import com.diwan.loghati.alto.Utils;
+
 public class GetFullAltoAction {
 	private String pid;
 	private String facet;
@@ -33,7 +35,7 @@ public String execute() {
 		String theString = "";
 		if(pid!=null && facet!=null){
 	        try {
-	            URL alto = new URL("http://loghati.amuser-qstpb.com/fedora/objects/"+pid+"/datastreams/"+facet+"/content");
+	            URL alto = new URL(Utils.getConfig(this, "fedoraserver")+"/"+pid+"/datastreams/"+facet+"/content");
 	            URLConnection yahooConnection = alto.openConnection();
 	            DataInputStream dis = new DataInputStream(yahooConnection.getInputStream());
 	            StringWriter writer = new StringWriter();
