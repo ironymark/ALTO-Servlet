@@ -3,13 +3,10 @@ package com.diwan.loghati.alto.action;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.DocumentBuilder;
@@ -29,6 +26,8 @@ import org.apache.struts2.convention.annotation.Result;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import com.diwan.loghati.alto.Utils;
 
 public class GetPartOfAltoAction{
 	private String pid;
@@ -60,19 +59,6 @@ public class GetPartOfAltoAction{
 
 	@Action(value="/getpartofalto",results={@Result(name="success",location="/jsp/responsedata.jsp")})
 	public String execute() {
-		/*
-		* Get the value of form parameter
-		*/
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("config.xml");
-		Properties prop = new Properties();
-		String loghatiConf_fedoraserver = "";
-    	try {
-    		prop.loadFromXML(is);
-    		loghatiConf_fedoraserver = prop.getProperty("fedoraserver");
- 
-    	} catch (IOException ex) {
-    		ex.printStackTrace();
-        }
 		String theString="";
 		DataInputStream dis = null;
 		if(pid!=null && facet!=null){
@@ -82,7 +68,7 @@ public class GetPartOfAltoAction{
 	        		dis = new DataInputStream(new FileInputStream(inFile));
 	        		  	        		
 	        	}else{
-	        		URL alto = new URL(loghatiConf_fedoraserver+"/"+pid+"/datastreams/"+facet+"/content");
+	        		URL alto = new URL(Utils.getConfig(this, "fedoraserver")+"/"+pid+"/datastreams/"+facet+"/content");
 	        		URLConnection connection = alto.openConnection();
 	        		dis = new DataInputStream(connection.getInputStream());
 	        	}
@@ -108,7 +94,6 @@ public class GetPartOfAltoAction{
 	            }else if("gettextblocks".equals(part)){
 	            	XPath xpath = XPathFactory.newInstance().newXPath();
 	            	NodeList nodes = (NodeList) xpath.evaluate("//TextBlock", doc, XPathConstants.NODESET);	            	
-	            	int l = nodes.getLength();
 		    	    Node fstNode = nodes.item(Integer.valueOf(textBlkIndex));
 		    	    Transformer transformer = TransformerFactory.newInstance().newTransformer();
 		    	    StringWriter writer = new StringWriter();

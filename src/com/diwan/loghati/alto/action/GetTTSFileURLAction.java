@@ -1,15 +1,13 @@
 package com.diwan.loghati.alto.action;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.security.MessageDigest;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -162,10 +160,8 @@ public class GetTTSFileURLAction {
     	String fileName = Utils.MD5(ttsText)+".wav"; 
 	    File file = new File(ttsWavFolder+"//"+fileName);//File.createTempFile("D1Temp", ".wav", new File(ttsWavFolder));
 	    if(!file.exists()){				
-			String url = "http://loghati.amuser-qstpb.com:8081/iqra-tts/TTS";
 			String charset = "UTF-8";
-			int contentLength=0;
-			URLConnection urlConnection = new URL(url).openConnection();
+			URLConnection urlConnection = new URL(Utils.getConfig(this,"ttsserver")).openConnection();
 			urlConnection.setConnectTimeout( 20000 );  // long timeout, but not infinite
 			urlConnection.setReadTimeout( 20000 );
 			urlConnection.setUseCaches(false);
@@ -215,23 +211,17 @@ public class GetTTSFileURLAction {
 			    writer.write(sb.toString()); // Write POST query string (if any needed).
 			    writer.flush();
 			    writer.close();
-			    contentLength = urlConnection.getContentLength();
 	
 			    BufferedInputStream reader = new BufferedInputStream( urlConnection.getInputStream() );
 	
-			    StringBuilder buf = new StringBuilder();
 			    byte[] cbuf = new byte[ 2048 ];
 			    int num;
-			    //String filename = "c:/temp/test2.wav";
-	
-	
+			    
 			    FileOutputStream out = new FileOutputStream(file);
-			    int offset = 0;
 			    
 			    while ( -1 != (num=reader.read( cbuf )))
 			    {
 				    out.write(cbuf,0, num);
-				    offset += num;	
 			    }		    
 			    
 			    out.flush();
@@ -239,9 +229,10 @@ public class GetTTSFileURLAction {
 			}
 		    HttpServletRequest request = ServletActionContext.getRequest();
 		    request.setAttribute("respData", callback+"('"+fileName+"');");
-		    return "success";
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		    StackTraceElement[] errorStack = e.getStackTrace();
+            HttpServletRequest request = ServletActionContext.getRequest();
+            request.setAttribute("respData", callback+"('"+Utils.getConfig(this,"ttsserver")+" "+e.getMessage()+errorStack[1].toString()+"');");
 			e.printStackTrace();
 		}
 		return "success";
