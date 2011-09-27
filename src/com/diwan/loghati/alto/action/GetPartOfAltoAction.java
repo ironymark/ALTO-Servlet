@@ -128,7 +128,7 @@ public class GetPartOfAltoAction{
 	            System.out.println("MalformedURLException: " + me);
 	        } catch (Exception ioe) {
                 HttpServletRequest request = ServletActionContext.getRequest();
-                request.setAttribute("respData", callback+"('"+ioe+"');");
+                request.setAttribute("respData", callback+"('error');");
 	            System.out.println("IOException: " + ioe);
 	        }
 		}    		
