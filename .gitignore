@@ -3,3 +3,4 @@
 .cvsignore
 /WebRoot/WEB-INF/classes
 /WebRoot/test
+responsedata_jsp.class

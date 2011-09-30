@@ -23,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
+import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -78,33 +79,28 @@ public class GetPartOfAltoAction{
 	            DocumentBuilder db = dbf.newDocumentBuilder();
 	            Document doc = db.parse(dis);
 	            doc.getDocumentElement().normalize();
+                HttpServletRequest request;
+                XPath xpath = XPathFactory.newInstance().newXPath();
+                StringWriter writer = new StringWriter();
 	            if("getlayout".equals(part)){
 		            removeAll(doc, Node.ELEMENT_NODE,"TextLine" );
 		            doc.getDocumentElement().normalize();	            
-		            XPath xpath = XPathFactory.newInstance().newXPath();
 		            NodeList nodes = (NodeList) xpath.evaluate("//alto", doc, XPathConstants.NODESET);
 		            Node fstNode = nodes.item(0);
 		            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-		            StringWriter writer = new StringWriter();
 		            transformer.transform(new DOMSource(fstNode), new StreamResult(writer));
-		            theString = writer.toString().replaceAll("[\n\r]", "");
-		            theString = StringUtils.replace(theString, "  ", "");
-		            HttpServletRequest request = ServletActionContext.getRequest();
-		    		request.setAttribute("respData", callback+"('"+theString+"');");		            
 	            }else if("gettextblocks".equals(part)){
-	            	XPath xpath = XPathFactory.newInstance().newXPath();
 	            	NodeList nodes = (NodeList) xpath.evaluate("//TextBlock", doc, XPathConstants.NODESET);	            	
 		    	    Node fstNode = nodes.item(Integer.valueOf(textBlkIndex));
 		    	    Transformer transformer = TransformerFactory.newInstance().newTransformer();
-		    	    StringWriter writer = new StringWriter();
 		    	    transformer.transform(new DOMSource(fstNode), new StreamResult(writer));
-		    	    theString = writer.toString().replaceAll("[\n\r]", "");
-		    	    theString = StringUtils.replace(theString, "  ", "");
-		    	    theString = StringUtils.replace(theString, "'", "\\'");
-		    	    //System.out.println(theString);
-		            HttpServletRequest request = ServletActionContext.getRequest();
-		    		request.setAttribute("respData", callback+"('"+theString+"');");
 	            }
+                theString = writer.toString().replaceAll("[\n\r]", "");
+                theString = JSONObject.escape(theString);
+                theString = StringUtils.replace(theString, "  ", "");
+//              theString = StringUtils.replace(theString, "'", "\\'");
+                request = ServletActionContext.getRequest();
+                request.setAttribute("respData", callback+"(\""+theString+"\");");
 	            dis.close();
 	            
 	        } catch (MalformedURLException me) {
@@ -113,7 +109,7 @@ public class GetPartOfAltoAction{
 	            System.out.println("MalformedURLException: " + me);
 	        } catch (Exception ioe) {
                 HttpServletRequest request = ServletActionContext.getRequest();
-                request.setAttribute("respData", callback+"('"+ioe+"');");
+                request.setAttribute("respData", callback+"('error');");
 	            System.out.println("IOException: " + ioe);
 	        }
 		}    		
