@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<!--  
-<comment>Local Debug Directories</comment>
+<properties>
+<comment>Hi</comment>
 <entry key="fedoraserver">http://loghati.amuser-qstpb.com/fedora/objects</entry>
 <entry key="fedoraDC">/datastreams/DC/content</entry>
 <entry key="fedoraRELS">/datastreams/RELS-EXT/content</entry>
-<entry key="TTSWAVFOLDER">/projects/workspace/alto/WebRoot/test</entry>
-<entry key="ttsserver">http://loghati.amuser-qstpb.com:8081/iqra-tts/TTS</entry>
--->
-<properties>
-<comment>Deployment Directories</comment>
-<entry key="fedoraserver">http://iqra1:8080/fedora/objects</entry>
-<entry key="ttsserver">http://loghati.amuser-qstpb.com:8081/iqra-tts/TTS</entry>
-<entry key="fedoraDC">/datastreams/DC/content</entry>
-<entry key="fedoraRELS">/datastreams/RELS-EXT/content</entry>
-<entry key="TTSWAVFOLDER">C:/Program Files/Apache Software Foundation/Tomcat 6.0/webapps/alto/test</entry>
+<entry key="TTSWAVFOLDER">C:/Program Files/Apache Software Foundation/Tomcat 6.0/webapps/alto2/test</entry>
 </properties>
