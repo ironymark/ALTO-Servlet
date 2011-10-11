@@ -70,10 +70,24 @@ public class GetPageInfoAction{
     		ex.printStackTrace();
         }
 		
-		String title="";
+		
 		String hasMTEn="";
 		String hasMTAr ="";
 		String pageId = "";
+		String mtPageId="";
+		
+		String title="";
+		String creator="";
+		String language="";
+		String publisher="";
+		String type="";
+
+		String mttitle="";
+		String mtcreator="";
+		String mtlanguage="";
+		String mtpublisher="";
+		String mttype="";
+		
 		ArrayList<String> parts = new ArrayList<String>();
 		if(pid!=null && facet!=null){
 			if("true".equals(debug)){
@@ -110,6 +124,36 @@ public class GetPageInfoAction{
 		                NodeList fstNm = fstElmnt.getChildNodes();
 		                title = ((Node) fstNm.item(0)).getNodeValue();
 		            }
+
+		            nodeLst = doc.getElementsByTagName("creator");
+		            fstNode = nodeLst.item(0);
+		            if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+		                Element fstElmnt = (Element) fstNode;
+		                NodeList fstNm = fstElmnt.getChildNodes();
+		                creator = ((Node) fstNm.item(0)).getNodeValue();
+		            }
+		            nodeLst = doc.getElementsByTagName("publisher");
+		            fstNode = nodeLst.item(0);
+		            if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+		                Element fstElmnt = (Element) fstNode;
+		                NodeList fstNm = fstElmnt.getChildNodes();
+		                publisher = ((Node) fstNm.item(0)).getNodeValue();
+		            }
+		            nodeLst = doc.getElementsByTagName("type");
+		            fstNode = nodeLst.item(0);
+		            if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+		                Element fstElmnt = (Element) fstNode;
+		                NodeList fstNm = fstElmnt.getChildNodes();
+		                type = ((Node) fstNm.item(0)).getNodeValue();
+		            }
+		            nodeLst = doc.getElementsByTagName("language");
+		            fstNode = nodeLst.item(0);
+		            if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+		                Element fstElmnt = (Element) fstNode;
+		                NodeList fstNm = fstElmnt.getChildNodes();
+		                language = ((Node) fstNm.item(0)).getNodeValue();
+		            }
+		            
 		            
 		        } catch (MalformedURLException me) {
 		            System.out.println("MalformedURLException: " + me);
@@ -144,9 +188,19 @@ public class GetPageInfoAction{
 		                		else 
 		                			if(child.contains("hasFacet_F_MT_en")){
 		                				hasMTEn = child;
+			                			NamedNodeMap attrs = fstChildNode.getAttributes();
+			                			Node attr = attrs.getNamedItem("rdf:resource");
+			                			String a = attr.getNodeValue();
+			                			String[] v = org.apache.commons.lang.StringUtils.split(a,"/");
+			                			mtPageId = v[1];
 		                			}else 
 		                				if(child.contains("hasFacet_F_MT_ar")){
 		                					hasMTAr = child;
+				                			NamedNodeMap attrs = fstChildNode.getAttributes();
+				                			Node attr = attrs.getNamedItem("rdf:resource");
+				                			String a = attr.getNodeValue();
+				                			String[] v = org.apache.commons.lang.StringUtils.split(a,"/");
+				                			mtPageId = v[1];		                					
 		                				}	                		
 		                	}
 		                }
@@ -157,6 +211,61 @@ public class GetPageInfoAction{
 		        } catch (Exception ioe) {
 		            System.out.println("IOException: " + ioe);
 		        }
+		        //--------------
+		        if(mtPageId!=null && !mtPageId.isEmpty()){
+			        try {
+			            URL url = new URL(loghatiConf_fedoraserver+"/"+mtPageId+loghatiConf_fedoraDC);
+			            URLConnection connection = url.openConnection();
+			            DataInputStream dis = new DataInputStream(connection.getInputStream());
+			            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			            DocumentBuilder db = dbf.newDocumentBuilder();
+			            Document doc = db.parse(dis);
+			            doc.getDocumentElement().normalize();	            
+			            NodeList nodeLst = doc.getElementsByTagName("title");
+			            Node fstNode = nodeLst.item(0);
+			            if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+			                Element fstElmnt = (Element) fstNode;
+			                NodeList fstNm = fstElmnt.getChildNodes();
+			                mttitle = ((Node) fstNm.item(0)).getNodeValue();
+			            }
+
+			            nodeLst = doc.getElementsByTagName("creator");
+			            fstNode = nodeLst.item(0);
+			            if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+			                Element fstElmnt = (Element) fstNode;
+			                NodeList fstNm = fstElmnt.getChildNodes();
+			                mtcreator = ((Node) fstNm.item(0)).getNodeValue();
+			            }
+			            nodeLst = doc.getElementsByTagName("publisher");
+			            fstNode = nodeLst.item(0);
+			            if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+			                Element fstElmnt = (Element) fstNode;
+			                NodeList fstNm = fstElmnt.getChildNodes();
+			                mtpublisher = ((Node) fstNm.item(0)).getNodeValue();
+			            }
+			            nodeLst = doc.getElementsByTagName("type");
+			            fstNode = nodeLst.item(0);
+			            if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+			                Element fstElmnt = (Element) fstNode;
+			                NodeList fstNm = fstElmnt.getChildNodes();
+			                mttype = ((Node) fstNm.item(0)).getNodeValue();
+			            }
+			            nodeLst = doc.getElementsByTagName("language");
+			            fstNode = nodeLst.item(0);
+			            if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+			                Element fstElmnt = (Element) fstNode;
+			                NodeList fstNm = fstElmnt.getChildNodes();
+			                mtlanguage = ((Node) fstNm.item(0)).getNodeValue();
+			            }
+			            
+			            
+			        } catch (MalformedURLException me) {
+			            System.out.println("MalformedURLException: " + me);
+			        } catch (Exception ioe) {
+			            System.out.println("IOException: " + ioe);
+			        }		        	
+		        }
+		        //-----------------
 		        if(pageId!=null && !"".equals(pageId)){
 			        try {
 			            URL url = new URL(loghatiConf_fedoraserver+"/"+pageId+loghatiConf_fedoraRELS);
@@ -198,7 +307,23 @@ public class GetPageInfoAction{
 	    			mtFacet = "F_MT_en_EN";
 	    		if(!"".equals(hasMTAr))
 	    			mtFacet = "F_MT_ar_QA";
-	    		String json = "{\"title\":\""+title+"\",\"mtfacet\":\""+mtFacet+"\",\"pages\":[";
+	    		String mtMetadata = "";
+	    		if(mtPageId!=null && !mtPageId.isEmpty()){
+	    			mtMetadata = "\"mttitle\":\""+mttitle+"\"," +
+					  			 "\"mtcreator\":\""+mtcreator+"\"," +
+					  			 "\"mtpublisher\":\""+mtpublisher+"\"," +
+					  			 "\"mttype\":\""+mttype+"\"," +
+					  			 "\"mtlanguage\":\""+mtlanguage+"\"," ;
+	    			
+	    		}
+	    		String json = "{\"title\":\""+title+"\"," +
+	    					  "\"creator\":\""+creator+"\"," +
+	    					  "\"publisher\":\""+publisher+"\"," +
+	    					  "\"type\":\""+type+"\"," +
+	    					  "\"language\":\""+language+"\"," +
+	    					  mtMetadata+
+	    					  "\"mtfacet\":\""+mtFacet+"\"," +
+	    					  "\"pages\":[";
 	    		int i = 0;
 	    		for(int j=0;j< parts.size();j++){
 	    			json += "{\""+j+"\":\""+parts.get(j)+"\"}";
