@@ -17,6 +17,8 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
+import com.diwan.loghati.alto.Utils;
+
 public class GetASRAction {
 	private String pid;
 	@Action(value="/getasr",results={@Result(name="success",location="/jsp/responsedata.jsp")})	
@@ -48,7 +50,7 @@ public class GetASRAction {
 			ByteArrayOutputStream formData = GetMultipartFormData(postParameters, formDataBoundary, soundData);
 			if(formData!=null){
 				String charset = "UTF-8";
-				URLConnection urlConnection = new URL("http://loghati.amuser-qstpb.com:8081/iqra-tts/Recog").openConnection();
+				URLConnection urlConnection = new URL(Utils.getConfig(this,"ttsserver")+"Recog").openConnection();
 				urlConnection.setConnectTimeout( 20000 );  // long timeout, but not infinite
 				urlConnection.setReadTimeout( 20000 );
 				urlConnection.setUseCaches(false);
