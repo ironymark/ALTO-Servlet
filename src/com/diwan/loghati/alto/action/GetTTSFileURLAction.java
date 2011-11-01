@@ -161,7 +161,7 @@ public class GetTTSFileURLAction {
 	    File file = new File(ttsWavFolder+"//"+fileName);//File.createTempFile("D1Temp", ".wav", new File(ttsWavFolder));
 	    if(!file.exists()){				
 			String charset = "UTF-8";
-			URLConnection urlConnection = new URL(Utils.getConfig(this,"ttsserver")).openConnection();
+			URLConnection urlConnection = new URL(Utils.getConfig(this,"ttsserver")+"TTS").openConnection();
 			urlConnection.setConnectTimeout( 20000 );  // long timeout, but not infinite
 			urlConnection.setReadTimeout( 20000 );
 			urlConnection.setUseCaches(false);

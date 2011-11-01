@@ -9,6 +9,9 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 public class Utils {
     static public byte[] compressData(String str) {
         // get bytes
@@ -184,5 +187,16 @@ public class Utils {
         }
         return theProperty;
     }
-
+	public static void removeAll(Node node, short nodeType, String name) {
+		if (node.getNodeType() == nodeType &&
+				(name == null || node.getNodeName().equals(name))) {
+			node.getParentNode().removeChild(node);
+		} else {
+			// Visit the children
+			NodeList list = node.getChildNodes();
+			for (int i=0; i<list.getLength(); i++) {
+				removeAll(list.item(i), nodeType, name);
+			}
+		} 
+	}
 }

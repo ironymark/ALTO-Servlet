@@ -6,13 +6,13 @@
 <entry key="fedoraDC">/datastreams/DC/content</entry>
 <entry key="fedoraRELS">/datastreams/RELS-EXT/content</entry>
 <entry key="TTSWAVFOLDER">/projects/workspace/alto/WebRoot/test</entry>
-<entry key="ttsserver">http://loghati.amuser-qstpb.com:8081/iqra-tts/TTS</entry>
+<entry key="ttsserver">http://loghati.amuser-qstpb.com:8081/iqra-tts/</entry>
 </properties>
  -->
  <properties>
 <comment>Deployment Directories</comment>
 <entry key="fedoraserver">http://iqra1:8080/fedora/objects</entry>
-<entry key="ttsserver">http://iqra2:8080/iqra-tts/TTS</entry>
+<entry key="ttsserver">http://iqra2:8080/iqra-tts/</entry>
 <entry key="fedoraDC">/datastreams/DC/content</entry>
 <entry key="fedoraRELS">/datastreams/RELS-EXT/content</entry>
 <entry key="TTSWAVFOLDER">C:/Program Files/Apache Software Foundation/Tomcat 6.0/webapps/alto/test</entry>

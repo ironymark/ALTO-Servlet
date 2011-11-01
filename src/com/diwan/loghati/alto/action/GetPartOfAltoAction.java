@@ -83,7 +83,7 @@ public class GetPartOfAltoAction{
                 XPath xpath = XPathFactory.newInstance().newXPath();
                 StringWriter writer = new StringWriter();
 	            if("getlayout".equals(part)){
-		            removeAll(doc, Node.ELEMENT_NODE,"TextLine" );
+		            Utils.removeAll(doc, Node.ELEMENT_NODE,"TextLine" );
 		            doc.getDocumentElement().normalize();	            
 		            NodeList nodes = (NodeList) xpath.evaluate("//alto", doc, XPathConstants.NODESET);
 		            Node fstNode = nodes.item(0);
@@ -122,19 +122,6 @@ public class GetPartOfAltoAction{
 		public void destroy() {
 		 
 		}	
-		public static void removeAll(Node node, short nodeType, String name) {
-		    if (node.getNodeType() == nodeType &&
-		            (name == null || node.getNodeName().equals(name))) {
-		        node.getParentNode().removeChild(node);
-		    } else {
-		        // Visit the children
-		        NodeList list = node.getChildNodes();
-		        for (int i=0; i<list.getLength(); i++) {
-		            removeAll(list.item(i), nodeType, name);
-		        }
-		    } 
-	 }
-
 
 		public String getPid() {
 			return pid;
