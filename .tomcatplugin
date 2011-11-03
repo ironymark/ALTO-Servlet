@@ -5,7 +5,7 @@
     <reloadable>true</reloadable>
     <redirectLogger>false</redirectLogger>
     <updateXml>true</updateXml>
-    <warLocation>/projects/workspace/alto/bin/alto2.war</warLocation>
+    <warLocation>/projects/workspace/alto/bin/alto.war</warLocation>
     <extraInfo></extraInfo>
-    <webPath>/alto2</webPath>
+    <webPath>/alto</webPath>
 </tomcatProjectProperties>
