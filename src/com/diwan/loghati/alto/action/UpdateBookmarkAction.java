@@ -8,11 +8,9 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.net.Authenticator;
-import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Properties;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -22,8 +20,6 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
-
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -37,8 +33,8 @@ import com.diwan.loghati.alto.Utils;
 public class UpdateBookmarkAction{
 	private String pid;
 	private String annxml;
-	
-	
+
+
 
 	public String getPid() {
 		return pid;
@@ -48,7 +44,7 @@ public class UpdateBookmarkAction{
 	public void setPid(String pid) {
 		this.pid = pid;
 	}
-	
+
 	@Action(value="/updatebookmark",results={@Result(name="success",location="/jsp/responsedata.jsp")})
 	public String execute() {
 		/*
@@ -137,16 +133,6 @@ public class UpdateBookmarkAction{
 		return "success";
 
 	}
-
-
-	class MyAuthenticator extends Authenticator {
-        public PasswordAuthentication getPasswordAuthentication() {
-            // I haven't checked getRequestingScheme() here, since for NTLM
-            // and Negotiate, the usrname and password are all the same.
-            System.err.println("Feeding username and password for " + getRequestingScheme());
-            return (new PasswordAuthentication("IQRAUser", "!QraUs3r".toCharArray()));
-        }
-    }
 	public String getAnnxml() {
 		return annxml;
 	}

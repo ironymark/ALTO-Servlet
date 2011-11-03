@@ -316,7 +316,8 @@ public class GetPageInfoAction{
 					  			 "\"mtlanguage\":\""+mtlanguage+"\"," ;
 	    			
 	    		}
-	    		String json = "{\"title\":\""+title+"\"," +
+	    		String json = "{\"mtPageId\":\""+mtPageId+"\"," +
+	    					  "\"title\":\""+title+"\"," +
 	    					  "\"creator\":\""+creator+"\"," +
 	    					  "\"publisher\":\""+publisher+"\"," +
 	    					  "\"type\":\""+type+"\"," +
