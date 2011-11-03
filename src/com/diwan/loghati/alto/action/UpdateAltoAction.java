@@ -3,19 +3,16 @@ package com.diwan.loghati.alto.action;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.net.Authenticator;
-import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Properties;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -26,16 +23,12 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 
-
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Result;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 
 public class UpdateAltoAction{
@@ -186,20 +179,14 @@ public class UpdateAltoAction{
 		    writer2.flush();
 		    writer2.close();
 		    
-		    int contentLength = urlConnection.getContentLength();
-			
 		    BufferedInputStream reader = new BufferedInputStream( urlConnection.getInputStream() );
 
 		    byte[] cbuf = new byte[ 2048 ];
 		    int num;
-		    //String filename = "c:/temp/test2.wav";
-
-
 		    int offset = 0;
-		    
 		    while ( -1 != (num=reader.read( cbuf )))
 		    {
-			    offset += num;	
+			    offset += num;
 		    }		    
 		    
         } catch (Exception ioe) {
