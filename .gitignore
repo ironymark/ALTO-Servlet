@@ -1,6 +1,6 @@
 /bin
 .DS_Store
 .cvsignore
-/WebRoot/WEB-INF/classes
-/WebRoot/test
+/WebContent/WEB-INF/classes
+/WebContent/test
 responsedata_jsp.class
