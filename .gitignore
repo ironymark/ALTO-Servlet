@@ -2,5 +2,4 @@
 .DS_Store
 .cvsignore
 /WebContent/WEB-INF/classes
-/WebContent/test
 responsedata_jsp.class
