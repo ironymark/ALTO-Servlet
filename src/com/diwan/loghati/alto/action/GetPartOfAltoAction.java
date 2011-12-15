@@ -84,6 +84,7 @@ public class GetPartOfAltoAction{
                 StringWriter writer = new StringWriter();
 	            if("getlayout".equals(part)){
 		            Utils.removeAll(doc, Node.ELEMENT_NODE,"TextLine" );
+		            Utils.removeAll(doc, Node.ELEMENT_NODE,"Sentence" );
 		            doc.getDocumentElement().normalize();	            
 		            NodeList nodes = (NodeList) xpath.evaluate("//alto", doc, XPathConstants.NODESET);
 		            Node fstNode = nodes.item(0);
